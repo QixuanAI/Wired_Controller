@@ -1,0 +1,49 @@
+name: visca_serial_controller
+protocol: visca
+interface: com
+baudrate: 9600
+databits: 8
+parity: null
+stopbits: 1
+cmd_type: hex
+params:
+    pan_speed:
+        placeholder: VV
+        min: 0x01
+        max: 0x18
+    tilt_speed:
+        placeholder: WW
+        min: 0x01
+        max: 0x14
+    pan_position: 
+        placeholder: 0Y0Y0Y0Y
+        min: 0x0001
+        max: 0xFFFF
+        fuction: null
+    tilt_position:
+        placeholder: 0Z0Z0Z0Z
+        min: 0x0001
+        max: 0xFFFF
+        fuction: null
+commands:
+    power_on: 8x 01 04 00 02 FF
+    power_off: 8x 01 04 00 03 FF
+    ptz_up: 8x 01 06 01 VV WW 03 01 FF
+    ptz_down: 8x 01 06 01 VV WW 03 02 FF
+    ptz_left: 8x 01 06 01 VV WW 01 03 FF
+    ptz_right: 8x 01 06 01 VV WW 02 03 FF
+    ptz_stop: 8x 01 06 01 VV WW 03 03 FF
+    ptz_MoveTo: 8x 01 06 02 VV WW 0Y0Y0Y0Y 0Z0Z0Z0Z FF
+    ptz_MoveBy: 8x 01 06 03 VV WW 0Y0Y0Y0Y 0Z0Z0Z0Z FF
+    ptz_home: 8x 01 06 04 FF
+    ptz_reset: 8x 01 06 05 FF
+    zoom_stop: 8x 01 04 07 00 FF
+    zoom_tele_std: 8x 01 04 07 02 FF
+    zoom_wide_std: 8x 01 04 07 03 FF
+buttons:
+    panel1:
+        - power_on
+        - power_off
+    panel2:
+        - left: [ptz_left,ptz_stop]
+        - right: [ptz_right,ptz_stop]
